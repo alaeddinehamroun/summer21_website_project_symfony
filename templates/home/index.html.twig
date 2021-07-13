@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ page_name }}
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('posted') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+<div class="container-fluid">
+    <div class="row justify-content-center mb-5 mt-5">
+        <div class="col-sm-8 col-12">
+            <a href="{{ path('post.add') }}" class="text-decoration-none"><button class="btn btn-secondary"><i class="bi bi-plus "></i>Click here to add a post</button> </a>
+            <p class="text-muted">Feel free to share with us what is in your mind.</p>
+        </div>
+    </div>
+{% for post in posts  %}
+    <div class="row justify-content-center">
+        <div class="col-sm-8 col-12">
+            <div class="card text-white bg-primary mb-3 mt-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-1 col-sm-1 ">
+                            {%  if (post.owner.media.image) %}
+                                <img src="{{ vich_uploader_asset(post.owner.media,post.owner.media.imageFile) }}" alt="" style="object-fit: cover;
+                                        border-radius:50%;
+                                        width: 50px;
+                                        height: 50px;">
+                                {% else %}
+                                    <i class="uil uil-user"></i>
+                            {% endif %}
+
+                        </div>
+                        <div class="col-6 col-sm-4 text-left">
+                            <p class="lead">{{ post.owner.username }}</p>
+                        </div>
+                        <div class="col-5 col-sm-7 text-right">
+                            <p class=" text-muted ">{{ post.date|date("F jS \\a\\t g:ia")  }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ post.description  }}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-4">
+                            {#
+                            <a href="#" class="text-light"><i class="uil uil-thumbs-up"></i></a>
+                            <a href="#" class="text-light"><i class="uil uil-thumbs-down"></i></a>
+                            #}
+                        </div>
+                        <div class="col-8 text-right">
+                            <div class="mx-auto">
+                                <a href="{{ path('post.comments',{'post': post.id}) }}" class="text-light ">Show Comments</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+    <div class="d-flex justify-content-center">
+        {% do posts.setPageRange(2) %}
+        {{ knp_pagination_render(posts,'home/pagination.html.twig') }}
+    </div>
+
+{% endblock %}

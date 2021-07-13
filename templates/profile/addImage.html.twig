@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} add image {% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(addImage) }}
+        {{ form_row(addImage.imageFile) }}
+        <div class="col-8 col-md-3">
+            <button class="btn btn-primary">Add image</button>
+        </div>
+        {{ form_end(addImage) }}
+
+    </div>
+{% endblock %}

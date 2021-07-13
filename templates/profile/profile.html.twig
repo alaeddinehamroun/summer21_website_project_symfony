@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('already') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+            {%  if (user.media.image) %}
+                <img src='{{ vich_uploader_asset(user.media,user.media.imageFile)  }}' style="object-fit: cover;
+  border-radius:50%;
+  width: 150px;
+  height: 150px;" alt="profile picture" >
+            {% endif %}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                username:
+            </div>
+            <div class="col">
+                {{ user.username }}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                mail address:
+            </div>
+            <div class="col">
+                {{ user.email }}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                email verification:
+            </div>
+            <div class="col">
+                {%  if (user.isVerified) %}
+                true
+                {% else %}
+                    false
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="row mt-5">
+            <div class="col">
+                <a href="{{ path('profile.edit') }}"><button class="btn btn-primary">Edit profile</button></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

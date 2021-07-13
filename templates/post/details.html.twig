@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('commented') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-sm-8 col-12">
+                <div class="card text-white bg-primary mb-3 mt-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-1 col-sm-1 ">
+                                <i class="uil uil-user"></i>
+                            </div>
+                            <div class="col-6 col-sm-4 text-left">
+                                <p class="lead">{{ post.owner.username }}</p>
+                            </div>
+                            <div class="col-5 col-sm-7 text-right">
+                                <p class=" text-muted ">{{ post.date|date("F jS \\a\\t g:ia")  }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ post.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-4">
+                                {#
+                                <a href="#" class="text-light"><i class="uil uil-thumbs-up"></i></a>
+                                <a href="#" class="text-light"><i class="uil uil-thumbs-down"></i></a>
+                                #}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-text container mt-3">
+                        <table class="table table-dark table-hover table-borderless">
+                            <tbody>
+                        {% for comment in comments  %}
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="lead">{{ comment.user.username }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col ms-3">
+                                                <p class="text-light">{{ comment.description }}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-muted text-right">{{ comment.date|date("F jS \\a\\t g:ia") }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="{{ path('comment.add',{'post': post.id}) }}" class="text-decoration-none"><button class="btn btn-secondary"><i class="bi bi-plus "></i>Click here to add a comment</button> </a>
+        </div>
+    </div>
+
+{% endblock %}

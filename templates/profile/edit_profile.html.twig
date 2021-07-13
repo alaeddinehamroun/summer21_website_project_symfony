@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('uploaded') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        {{ form_start(editProfile) }}
+        {{ form_row(editProfile.username) }}
+        {{ form_row(editProfile.media.imageFile) }}
+        <div class="col-8 col-md-3">
+            {{ form_row(editProfile.submit) }}
+        </div>
+
+        {{ form_end(editProfile) }}
+
+    </div>
+{% endblock %}
